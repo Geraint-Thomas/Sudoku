@@ -97,4 +97,5 @@ InitTestScene*.unity*
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
 
 #un-ignore solver folder
-!**/Sudoku
+!/Sudoku
+!/Sudoku/Sudoku.sln
