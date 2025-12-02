@@ -228,6 +228,7 @@ void BaseSolver::lineElimination(int index)
 	//horizontal check
 	for (int i = 0; i < 9; i++)
 	{
+		/*
 		if (x != i)
 		{
 			if (cells[i + (y * gridWidth)]->number == 0)
@@ -240,12 +241,27 @@ void BaseSolver::lineElimination(int index)
 					}
 				}
 			}
+		}*/
+
+		if (cells[i + (y * gridWidth)]->number == 0)
+		{
+			for (int x = 0; x < 9; x++)//: cells[i + (y * gridWidth)]->possible)
+			{
+				if (cells[i + (y * gridWidth)]->possible[x] != 0)
+				{
+					horizontalPossible[x]++;
+				}
+			}
 		}
 	}
+
+	x = index % 9;
+	y = floor(index / 9);
 
 	//vertical check
 	for (int i = 0; i < 9; i++)
 	{
+		/*
 		if (y != i)
 		{
 			if (cells[x + (i * gridWidth)]->number == 0)
@@ -258,7 +274,19 @@ void BaseSolver::lineElimination(int index)
 					}
 				}
 			}
+		}*/
+
+		if (cells[x + (i * gridWidth)]->number == 0)
+		{
+			for (int y = 0; y < 9; y++)//: cells[x + (i * gridWidth)]->possible)
+			{
+				if (cells[x + (i * gridWidth)]->possible[y] != 0)
+				{
+					verticalPossible[x]++;
+				}
+			}
 		}
+
 	}
 
 	//for all possible numbers in current cell

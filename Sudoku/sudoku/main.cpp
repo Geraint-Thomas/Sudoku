@@ -10,6 +10,8 @@ using namespace std;
 int main()
 {
 	//g_Scene = new Scene();
+	
+	//add different grix sizes, center dot, asterisk, X (cross), XV (add to 10 or 5), Killer (cage add to number), own implimentable grid (like center dot and asterisk)
 
 	ifstream inputFile;
 	inputFile.open("TEST1.txt");
