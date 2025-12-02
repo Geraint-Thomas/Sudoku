@@ -28,11 +28,31 @@ std::array<int,81> BaseSolver::solve()
 			if (cells[i]->number == 0)
 			{
 				searchBlock(i);
+				if (cells[i]->number != 0)
+				{
+					printf("");
+				}
 				searchLines(i);
+				if (cells[i]->number != 0)
+				{
+					printf("");
+				}
 				checkPossible(i);
+				if (cells[i]->number != 0)
+				{
+					printf("");
+				}
 				//blockPossible and horizontalPossible stack around variable was corrupted
 				blockElimination(i);
+				if (cells[i]->number != 0)
+				{
+					printf("");
+				}
 				lineElimination(i);
+				if (cells[i]->number != 0)
+				{
+					printf("");
+				}
 				//this ends up in an infinate loop of unsolvable grid with 72 cells solved
 				//this must mean that some are being placed in the wrong cells or that the puzzle is too complex for the current checks
 
@@ -230,9 +250,9 @@ void BaseSolver::lineElimination(int index)
 		{
 			if (cells[x + (i * gridWidth)]->number == 0)
 			{
-				for (int x =0;x<9;x++)//: cells[x + (i * gridWidth)]->possible)
+				for (int y =0;y<9;y++)//: cells[x + (i * gridWidth)]->possible)
 				{
-					if (cells[x + (i * gridWidth)]->possible[x] != 0)
+					if (cells[x + (i * gridWidth)]->possible[y] != 0)
 					{
 						verticalPossible[x]++;
 					}
