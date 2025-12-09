@@ -3,6 +3,7 @@
 #include "BaseSolver.h"
 #include "BTBaseSolver.h"
 #include "Cell.h"
+#include "BTSolver.h"
 #include <array>
 #include <vector>
 
@@ -64,21 +65,23 @@ void loadFile()
 		if (solverType == 0)
 		{
 
-			std::vector<int> read(size[0] * size[1]);
+			std::vector<int> read;
+			read.resize(gridSize);
 			for (int i = 0; i < 81; i++)
 			{
 				inputFile >> read[i];
 
 			}
 
-			BTBaseSolver solver = BTBaseSolver(read); //make class that can solve with variable grid size
-			std::array<int, 81> output = solver.solve();
-
+			BTSolver solver = BTSolver(read, size[0], size[1], block[0], block[1], 9); //make class that can solve with variable grid size
+			std::vector<int> output = solver.solve();
+			output.resize(gridSize);
 			ofstream outputFile("output.txt");
-			for (int i = 0; i < 81; i++)
+			for (int i = 0; i < gridSize; i++)
 			{
 				printf(" output = %d \n", output[i]);
-				outputFile << output[i] << '\n';
+				outputFile << output[i];
+				outputFile << '\n';
 			}
 		}
 		//use Possibility checking solver

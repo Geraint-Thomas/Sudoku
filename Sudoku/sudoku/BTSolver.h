@@ -9,7 +9,7 @@ using namespace std;
 class BTSolver
 {
 public:
-	BTSolver(int grid[], int width, int height, int blockW, int blockH, int range);
+	BTSolver(vector<int> grid, int width, int height, int blockW, int blockH, int range);
 	~BTSolver();
 
 	std::vector<int> solve();
@@ -18,7 +18,7 @@ public:
 	
 	bool check(int row, int col, int num);
 	
-	std::vector<vector<int>> grid;
+	vector<vector<int>> grid;
 	int width;
 	int height;
 	int blockHeight;

@@ -5,10 +5,10 @@
 #include <array>
 #include "BTSolver.h"
 
-
+using namespace std;
 
 //Back Tracking Base Solver
-BTSolver::BTSolver(int inputGrid[], int w, int h, int blockw, int blockh, int r)
+BTSolver::BTSolver(vector<int> inputGrid, int w, int h, int blockw, int blockh, int r)
 {
     width = w;
     height = h;
@@ -16,11 +16,21 @@ BTSolver::BTSolver(int inputGrid[], int w, int h, int blockw, int blockh, int r)
     blockHeight = blockh;
     range = r;
 
+    //resize 2d vector
+    grid.resize(height);
+    for (int i = 0; i < height; i++)
+    {
+        grid[i].resize(width);
+    }
+
+
     for (int i = 0; i < width*height; i++)
     {
         //row col
         int rowNum = floor(i / height);
         int colNum = i % width;
+        vector<int> temp;
+        //grid.resize(width * height);
         //fill local 2d array with input values
         grid[rowNum][colNum] = inputGrid[i];
     }
@@ -31,29 +41,32 @@ BTSolver::~BTSolver()
 
 }
 
-std::vector<int> BTSolver::solve()
+vector<int> BTSolver::solve()
 {
     if (backTrackSolve())
     {
-        std::vector<int> solvedGrid;
+        vector<int> *solvedGrid = new vector<int>;
+        solvedGrid->resize(width * height);
         for (int i = 0; i < width*height; i++)
         {
             //row col
-            int rowNum = floor(i / 9);
-            int colNum = i % 9;
+            int rowNum = floor(i / height);
+            int colNum = i % width;
+            
             //fill local 2d array with input values
-            solvedGrid[i] = grid[rowNum][colNum];
+            (*solvedGrid)[i] = grid[rowNum][colNum];
         }
-        return solvedGrid;
+        return *solvedGrid;
     }
     else
     {
-        std::vector<int> unsolvedGrid;
+        vector<int> *unsolvedGrid = new vector<int>;
+        unsolvedGrid->resize(width * height);
         for (int i = 0; i < width * height; i++)
         {
-            unsolvedGrid[i] = 0;
+            (*unsolvedGrid)[i] = 0;
         }
-        return unsolvedGrid;
+        return *unsolvedGrid;
     }
 
 
@@ -100,6 +113,7 @@ bool BTSolver::backTrackSolve()
 
 bool BTSolver::cellValid(int row, int col, int num)
 {
+    /*
     for (int x = 0; x < 9; x++) {
         //if the number appers in the same
         //  row                     columb                  or 3x3 block
@@ -109,7 +123,8 @@ bool BTSolver::cellValid(int row, int col, int num)
         }
     }
     return true;
-
+    */
+    
     //check row
     for (int i = 0; i < width; i++)
     {
@@ -128,8 +143,8 @@ bool BTSolver::cellValid(int row, int col, int num)
     }
 
     //check box
-    int rowOffset = row - (row % height);
-    int colOffset = col - (col % width);
+    int rowOffset = row - (row % blockHeight);
+    int colOffset = col - (col % blockWidth);
     for (int i = 0; i < blockWidth; i++)
     {
         for (int j = 0; j < blockHeight; j++)
@@ -142,6 +157,12 @@ bool BTSolver::cellValid(int row, int col, int num)
     }
 
     //if reached this point the number is valid (for now)
+    return true;
+    
+}
+
+bool BTSolver::check(int row, int col, int num)
+{
     return true;
 }
 
