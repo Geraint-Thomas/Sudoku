@@ -125,12 +125,14 @@
   <ItemGroup>
     <ClCompile Include="BaseSolver.cpp" />
     <ClCompile Include="BTBaseSolver.cpp" />
+    <ClCompile Include="BTSolver.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseSolver.h" />
     <ClInclude Include="BTBaseSolver.h" />
+    <ClInclude Include="BTSolver.h" />
     <ClInclude Include="Cell.h" />
   </ItemGroup>
   <ItemGroup>
