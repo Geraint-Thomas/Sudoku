@@ -76,8 +76,10 @@ std::array<int,81> BaseSolver::solve()
 
 bool BaseSolver::checkIfSolved()
 {
+	printf("\n");
 	int size = gridHeight * gridWidth;
 	int count = 0;
+	int widthCount = 0;
 	//loop through grid 
 	for (int i = 0; i < size; i++)
 	{
@@ -85,8 +87,17 @@ bool BaseSolver::checkIfSolved()
 		if (cells[i]->number != 0)
 		{
 			count++;
+			
+		}
+		printf(" %d", cells[i]->number);
+		widthCount++;
+		if (widthCount == 9)
+		{
+			widthCount = 0;
+			printf("\n");
 		}
 	}
+	printf("\n ------- \n ------- \n");
 
 	//if all cells are filled the grid is solved
 	if (count == size) 	{
@@ -209,7 +220,7 @@ void BaseSolver::blockElimination(int index)
 			if (blockPossible[i] == 1)
 			{
 				//fill that cell with the only possible number
-				cells[index]->number = cells[index]->possible[i];
+				cells[index]->setNumber(cells[index]->possible[i]);
 				return;
 			}
 		}
@@ -282,7 +293,7 @@ void BaseSolver::lineElimination(int index)
 			{
 				if (cells[x + (i * gridWidth)]->possible[y] != 0)
 				{
-					verticalPossible[x]++;
+					verticalPossible[y]++;
 				}
 			}
 		}
@@ -298,12 +309,12 @@ void BaseSolver::lineElimination(int index)
 			if (horizontalPossible[i] == 1)
 			{
 				//fill that cell with the only possible number
-				cells[index]->number = cells[index]->possible[i];
+				cells[index]->setNumber(cells[index]->possible[i]);
 				return;
 			}
 			else if (verticalPossible[i] == 1)
 			{
-				cells[index]->number = cells[index]->possible[i];
+				cells[index]->setNumber(cells[index]->possible[i]);
 				return;
 			}
 		}
@@ -328,6 +339,6 @@ void BaseSolver::checkPossible(int index)
 	}
 	if (numOfZeros == 8)
 	{
-		cells[index]->number = numCheck;
+		cells[index]->setNumber(numCheck);
 	}
 }

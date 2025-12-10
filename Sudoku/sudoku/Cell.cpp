@@ -18,3 +18,12 @@ void Cell::notPossible(int index)
 {
 	possible[index-1] = 0;
 }
+
+void Cell::setNumber(int num)
+{
+	number = num;
+	for (int i = 0; i < 9; i++)
+	{
+		possible[i] = 0;
+	}
+}

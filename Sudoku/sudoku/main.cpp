@@ -113,6 +113,14 @@ void loadFile()
 	//if type of puzzle is classic
 	if (puzzleType == "CLASSIC")
 	{
+		//read grid width and height
+		inputFile >> stringEat;
+		inputFile.ignore(256, '\n');
+
+		//read grid block sizes
+		inputFile >> stringEat;
+		inputFile.ignore(256, '\n');
+
 		//read what solver to use
 		inputFile >> stringEat >> solverType;
 		inputFile.ignore(256, '\n');

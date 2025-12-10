@@ -17,6 +17,7 @@ public:
 	int number;
 	int possible[9];
 	void notPossible(int index);
+	void setNumber(int num);
 
 
 
