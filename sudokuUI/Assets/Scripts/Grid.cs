@@ -28,9 +28,12 @@ public class Grid : MonoBehaviour
     
     public void clearGrid()
     {
-        for (int i = 0; i < gridWidth * gridHeight; i++)
+        if (gridParent.transform.GetChild(3) != null)
         {
-            Destroy(gridParent.transform.GetChild(i).gameObject);
+            for (int i = 0; i < gridWidth * gridHeight; i++)
+            {
+                Destroy(gridParent.transform.GetChild(i).gameObject);
+            }
         }
     }
 
@@ -50,43 +53,21 @@ public class Grid : MonoBehaviour
         
     }
 
-    /*
-    public void setGridPosition()
+    public void changeGridSize(int gridWidth, int gridHeight)
     {
-        gridLayout.enabled = false;
-        for (int y = 0; y < gridHeight; y++)
-        {
-            for (int x = 0; x < gridWidth; x++)
-            {
-                //set horizontal
-                if (x % 3 == 0)
-                {
-                    
-                    GameObject go = gridParent.transform.GetChild(x + (y * gridWidth)).gameObject;
-                    Debug.Log(go.GetComponent<RectTransform>().pivot.x);
-                    go.GetComponent<RectTransform>().pivot.Set(go.GetComponent<RectTransform>().pivot.x + 0.05f, go.GetComponent<RectTransform>().pivot.y);
-                    Debug.Log(go.GetComponent<RectTransform>().pivot.x);
-                }
-                else if (x % 3 == 2)
-                {
-                    GameObject go = gridParent.transform.GetChild(x + (y * gridWidth)).gameObject;
-                    go.GetComponent<RectTransform>().pivot.Set(go.GetComponent<RectTransform>().pivot.x - 0.05f, go.GetComponent<RectTransform>().pivot.y);
-                }
+        //get rid of existing cells
+        clearGrid();
 
-                //set vertical
-                if (y % 3 == 0)
-                {
-                    GameObject go = gridParent.transform.GetChild(x + (y * gridWidth)).gameObject;
-                    go.GetComponent<RectTransform>().pivot.Set(go.GetComponent<RectTransform>().pivot.x, go.GetComponent<RectTransform>().pivot.y + 0.05f);
-                }
-                else if (y % 3 == 2)
-                {
-                    GameObject go = gridParent.transform.GetChild(x + (y * gridWidth)).gameObject;
-                    go.GetComponent<RectTransform>().pivot.Set(go.GetComponent<RectTransform>().pivot.x, go.GetComponent<RectTransform>().pivot.y - 0.05f);
-                }
-            }
-        }
         gridLayout.enabled = true;
+        //set constraint to new grid size
+        gridLayout.constraintCount = gridWidth;
+
+        for (int i = 0; i < gridHeight * gridWidth; i++)
+        {
+            GameObject cell = Instantiate(cellPrefab, gridParent.transform);
+            cell.GetComponent<Cell>().setNumber(0);
+        }
     }
-    */
+
+
 }

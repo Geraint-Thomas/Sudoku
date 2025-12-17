@@ -1,0 +1,205 @@
+//stuff
+#include <iostream>
+#include "BaseSolver.h"
+#include "BTBaseSolver.h"
+#include "Cell.h"
+#include "BTSolver.h"
+#include "MakePuzzle.h"
+#include <array>
+#include <vector>
+
+using namespace std;
+
+//global variables
+ifstream inputFile;
+
+//function prototypes
+void loadFile();
+
+
+
+int main()
+{
+	//g_Scene = new Scene();
+	
+	//add different grix sizes, center dot, asterisk, X (cross), XV (add to 10 or 5), Killer (cage add to number), own implimentable grid (like center dot and asterisk)
+
+	
+	inputFile.open("Input.txt");
+
+	loadFile();
+
+	
+
+	
+}
+
+void loadFile()
+{
+	//dissern which solver to use
+	string stringEat;
+	string puzzleType;
+	int solverType;
+	
+
+	//read what type of puzzle it is
+	inputFile >> stringEat >> puzzleType;
+	inputFile.ignore(256, '\n');
+
+	//is it creating a puzzle
+	if (puzzleType == "MAKE")
+	{
+		int size[2];
+		int block[2];
+		int difficulty;
+
+		//read grid width and height
+		inputFile >> stringEat >> size[0] >> size[1];
+		inputFile.ignore(256, '\n');
+
+		//read grid block sizes
+		inputFile >> stringEat >> block[0] >> block[1];
+		inputFile.ignore(256, '\n');
+
+		inputFile >> stringEat >> difficulty;
+		inputFile.ignore(256, '\n');
+
+		MakePuzzle makeP = MakePuzzle(difficulty, size[0], size[1], block[0], block[1], size[0]);
+
+		std::vector<int> output;
+		output.resize(81);
+		output = makeP.createPuzzle();
+
+		ofstream outputFile("Puzzle.txt");
+		for (int i = 0; i < 81; i++)
+		{
+			//printf(" output = %d \n", output[i]);
+			outputFile << output[i];
+			outputFile << '\n';
+		}
+	}
+	//is it a specific size
+	if (puzzleType == "SIZE")
+	{
+		int size[2];
+		int block[2];
+
+		//read grid width and height
+		inputFile >> stringEat >> size[0] >> size[1];
+		inputFile.ignore(256, '\n');
+
+		//read grid block sizes
+		inputFile >> stringEat >> block[0] >> block[1];
+		inputFile.ignore(256, '\n');
+
+		//read what solver to use
+		inputFile >> stringEat >> solverType;
+		inputFile.ignore(256, '\n');
+
+		int gridSize = size[0] * size[1];
+		//use backtrack solver
+		if (solverType == 0)
+		{
+
+			std::vector<int> read;
+			read.resize(gridSize);
+			for (int i = 0; i < 81; i++)
+			{
+				inputFile >> read[i];
+
+			}
+
+			BTSolver solver = BTSolver(read, size[0], size[1], block[0], block[1], size[0]); //make class that can solve with variable grid size
+			std::vector<int> output = solver.solve();
+			output.resize(gridSize);
+			ofstream outputFile("Output.txt");
+			for (int i = 0; i < gridSize; i++)
+			{
+				printf(" output = %d \n", output[i]);
+				outputFile << output[i];
+				outputFile << '\n';
+			}
+		}
+		//use Possibility checking solver
+		else if (solverType == 1)
+		{
+			int read[81];
+			for (int i = 0; i < 81; i++)
+			{
+				inputFile >> read[i];
+
+			}
+
+			BaseSolver solver = BaseSolver(read);
+			std::array<int, 81> output = solver.solve();
+
+			ofstream outputFile("Output.txt");
+			for (int i = 0; i < 81; i++)
+			{
+				printf(" output = %d \n", output[i]);
+				outputFile << output[i] << '\n';
+			}
+		}
+	}
+
+	
+
+
+
+	//if type of puzzle is classic
+	if (puzzleType == "CLASSIC")
+	{
+		//read grid width and height
+		inputFile >> stringEat;
+		inputFile.ignore(256, '\n');
+
+		//read grid block sizes
+		inputFile >> stringEat;
+		inputFile.ignore(256, '\n');
+
+		//read what solver to use
+		inputFile >> stringEat >> solverType;
+		inputFile.ignore(256, '\n');
+
+		//use backtrack solver
+		if (solverType == 0)
+		{
+			int read[81];
+			for (int i = 0; i < 81; i++)
+			{
+				inputFile >> read[i];
+
+			}
+
+			BTBaseSolver solver = BTBaseSolver(read);
+			std::array<int, 81> output = solver.solve();
+
+			ofstream outputFile("Output.txt");
+			for (int i = 0; i < 81; i++)
+			{
+				printf(" output = %d \n", output[i]);
+				outputFile << output[i] << '\n';
+			}
+		}
+		//use Possibility checking solver
+		else if (solverType == 1)
+		{
+			int read[81];
+			for (int i = 0; i < 81; i++)
+			{
+				inputFile >> read[i];
+
+			}
+
+			BaseSolver solver = BaseSolver(read);
+			std::array<int, 81> output = solver.solve();
+
+			ofstream outputFile("Output.txt");
+			for (int i = 0; i < 81; i++)
+			{
+				printf(" output = %d \n", output[i]);
+				outputFile << output[i] << '\n';
+			}
+		}
+	}
+}

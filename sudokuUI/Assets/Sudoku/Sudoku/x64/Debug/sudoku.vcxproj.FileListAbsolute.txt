@@ -1,0 +1,2 @@
+A:\Uni\Year 3\GenVirtWorlds\Sudoku\Sudoku\x64\Debug\sudoku.exe
+A:\Uni\Year 3\GenVirtWorlds\Sudoku\sudokuUI\Assets\Sudoku\Sudoku\x64\Debug\sudoku.exe

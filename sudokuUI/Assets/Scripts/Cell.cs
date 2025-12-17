@@ -14,8 +14,13 @@ public class Cell : MonoBehaviour
     {
         if (_text != null)
         {
-           
-            _text.text = num.ToString();
+           if(num == 0)
+           {
+                _text.text = "";
+           }
+            else
+                _text.text = num.ToString();
         }
+
     }
 }

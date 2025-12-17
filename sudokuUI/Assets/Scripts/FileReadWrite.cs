@@ -1,32 +1,55 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Windows;
 
 public class FileReadWrite : MonoBehaviour
 {
-    string inputPath = "Assets/Sudoku/TEST2.txt";
-    string outputPath = "Assets/Sudoku/OUTPUT.txt";
+    string inputPath = "Assets/Sudoku/Sudoku/Input.txt";
+    string outputPath = "Assets/Sudoku/Sudoku/Output.txt";
+    string genPuzzlePath = "Assets/Sudoku/Sudoku/Puzzle.txt";
     Grid gridScript;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public int height = 9;
+    public int width = 9;
+    public int blockHeight = 3;
+    public int blockWidth = 3;
+    public int difficulty =3;
+
     void Start()
     {
-        
+        gridScript = gameObject.GetComponent<Grid>();
     }
+
     public FileReadWrite(Grid grid)
     {
         gridScript = grid;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void clearFile(string path)
     {
-        
+        using (var writer = new StreamWriter(path))
+        {
+            writer.WriteLine("");
+        }
     }
 
-    public void changeInput(string input)
+    public void changeInput(string input, int check)
     {
-        inputPath = input;
+        if (check == 0)
+        {
+            using (var writer = new StreamWriter("Assets/Sudoku/x64/Debug/Input.txt"))
+            {
+                writer.WriteLine(input);
+            }
+        }
+        else if (check == 1)
+        {
+            using (var writer = new StreamWriter("Assets/Sudoku/x64/Debug/Input.txt"))
+            {
+                writer.WriteLine(input);
+            }
+        }
     }
 
     public void changeOutput(string output)
@@ -34,13 +57,24 @@ public class FileReadWrite : MonoBehaviour
         outputPath = output;
     }
 
-    public void ReadFile()
+    public void ReadFile(int file)
     {
-        List<int> grid = new List<int>();
-        int height = 0; 
-        int width = 0;
+        string readFile = "Assets/Sudoku/x64/Debug/Input.txt";
+       
+        if (file == 1)
+        {
+            readFile = "Assets/Sudoku/x64/Debug/Puzzle.txt";
+           
+        }
+        else if (file == 2)
+        {
+            readFile = "Assets/Sudoku/x64/Debug/Output.txt";
+        }
+            List<int> grid = new List<int>();
+
         //setup reader
-        using (StreamReader reader = new StreamReader(inputPath))
+        Debug.Log(readFile);
+        using (StreamReader reader = new StreamReader(readFile))
         {
             //while there are lines to read
             while (!reader.EndOfStream)
@@ -54,6 +88,7 @@ public class FileReadWrite : MonoBehaviour
 
                 foreach (string part in parts)
                 {
+                    /*
                     Debug.Log(part);
                     if (parts[0] == "SIZE")
                     {
@@ -70,6 +105,8 @@ public class FileReadWrite : MonoBehaviour
                     {
                         grid.Add(int.Parse(parts[0]));
                     }
+                    */
+                    grid.Add(int.Parse(parts[0]));
                 }
 
 
@@ -80,5 +117,43 @@ public class FileReadWrite : MonoBehaviour
         
         gridScript.updateGrid(grid.ToArray());
 
+    }
+
+    public string getPuzzle()
+    {
+        string readFile = "Assets/Sudoku/x64/Debug/Puzzle.txt";
+
+        
+        string grid = "";
+
+        //setup reader
+        Debug.Log(readFile);
+        using (StreamReader reader = new StreamReader(readFile))
+        {
+            //while there are lines to read
+            while (!reader.EndOfStream)
+            {
+                //read next line
+                string line = reader.ReadLine();
+                //Debug.Log("Line: " + line);
+
+                //split line on every space to seperate data
+                string[] parts = line.Split(' ');
+
+                foreach (string part in parts)
+                {
+
+                    grid += parts[0] +"\n";
+                }
+            }
+        }
+
+        return grid;
+        
+    }
+
+    public void changeGridSize()
+    {
+        gridScript.changeGridSize(width, height);
     }
 }
